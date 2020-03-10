@@ -17,9 +17,6 @@ bool Game::Init()
 	//Initialize IMG subsystems: image type flag
 	IMG_Init(png_flag);
 
-	//Initialize MIXER subsystems: audio type flag
-	
-
 	//Create our window: title, x, y, w, h, flags
 	Window = SDL_CreateWindow("Spaceship: arrow keys + space", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
 	if (Window == NULL)
