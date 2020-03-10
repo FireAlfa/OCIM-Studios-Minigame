@@ -9,6 +9,7 @@ public:
 	void Init(int posx, int posy, int w, int h, int s);
 	void GetRect(int* posx, int* posy, int* w, int* h);
 	void SetX(int posx);
+	int  GetX();
 	int  GetY();
 	int  GetWidth();
 	void ShutDown();

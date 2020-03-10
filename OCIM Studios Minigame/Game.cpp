@@ -61,7 +61,7 @@ bool Game::Init()
 	}
 
 	//Initialize variables
-	Player.Init(20, WINDOW_HEIGHT >> 1, PLAYER_WIDTH, PLAYER_HEIGHT, 5);
+	Player.Init(60, WINDOW_HEIGHT >> 1, PLAYER_WIDTH, PLAYER_HEIGHT, 5);
 
 	//Initialize background
 	int bg_width;
@@ -123,7 +123,7 @@ bool Game::Update()
 
 	//LOGIC
 	//Process Input
-	int fx = 0, fy = 0; //Driection variables
+	 //Driection variables
 
 	//Quit game
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN) {
@@ -131,31 +131,25 @@ bool Game::Update()
 	}
 
 	//Move up
-	if (keys[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
-		fy = -1; //CHANGE
-		jumpFlag = true;
-	}
-
-	//Move left
-	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-		fx = -1;
-	}
-
-	//Move right
-	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-		fx = 1;
+	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+		fy = -1;
+		if (((Player.GetY() + PLAYER_HEIGHT) >= 600)) {
+			jumpFlag = true;
+		}
 	}
 	
 	//Screen scroll
-	/*Scene.Move(-1, 0);
+	Scene.Move(-1, 0);
 	if (Scene.GetX() <= -Scene.GetWidth()) {
 		Scene.SetX(0);
-	}*/
+	}
 
 	//Player update
 	if (((Player.GetY() + PLAYER_HEIGHT) >= 600) || jumpFlag == true) {
 		Player.Move(fx, fy);
-		jumpFlag = false;
+		if ((Player.GetY() + PLAYER_HEIGHT) <= 300) {
+			jumpFlag = false;
+		}
 	}
 	else {
 		Player.Move(0, 1);
@@ -169,7 +163,7 @@ bool Game::Update()
 	}
 		
 
-	return false;
+ 	return false;
 }
 
 //DRAW	
@@ -186,6 +180,8 @@ void Game::Draw()
 	//DRAW
 	//Draw scene
 	Scene.GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
+	SDL_RenderCopy(Renderer, Texture_Background, NULL, &rc);
+	rc.x += rc.w; //update x to draw the second background image
 	SDL_RenderCopy(Renderer, Texture_Background, NULL, &rc);
 	rc.x += rc.w; //update x to draw the second background image
 	SDL_RenderCopy(Renderer, Texture_Background, NULL, &rc);

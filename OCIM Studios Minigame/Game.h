@@ -13,11 +13,8 @@
 #define WINDOW_WIDTH	1024
 #define WINDOW_HEIGHT	768
 #define MAX_KEYS		256
-#define MAX_SHOTS		64
-#define PLAYER_WIDTH	104
-#define PLAYER_HEIGHT	82
-#define PROJ_WIDTH		56
-#define PROJ_HEIGHT		20
+#define PLAYER_WIDTH	64
+#define PLAYER_HEIGHT	64
 
 
 class Game
@@ -46,6 +43,7 @@ private:
 	int ogg_flag = MIX_INIT_OGG;
 	int mp3_flag = MIX_INIT_MP3;
 	int contSong = 19800;
+	int fx = 0, fy = 0;
 	
 	bool jumpFlag = false;
 
