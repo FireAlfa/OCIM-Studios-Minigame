@@ -8,10 +8,4 @@ public:
 
 	int GetY();
 	void Move(int dx);
-	
-private:
-	int x, y;
-	int width, height;
-	int speed;
-	bool is_alive;
 };
