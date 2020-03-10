@@ -131,8 +131,9 @@ bool Game::Update()
 	}
 
 	//Move up
-	if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
+	if (keys[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
 		fy = -1; //CHANGE
+		jumpFlag = true;
 	}
 
 	//Move left
@@ -152,7 +153,13 @@ bool Game::Update()
 	}*/
 
 	//Player update
-	Player.Move(fx, fy);
+	if (((Player.GetY() + PLAYER_HEIGHT) >= 600) || jumpFlag == true) {
+		Player.Move(fx, fy);
+		jumpFlag = false;
+	}
+	else {
+		Player.Move(0, 1);
+	}
 
 	contSong--;
 	if (contSong == 0) {

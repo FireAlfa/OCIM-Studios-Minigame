@@ -24,9 +24,9 @@ void Entity::GetRect(int* posx, int* posy, int* w, int* h)
 	*w = width;
 	*h = height;
 }
-int Entity::GetX()
+int Entity::GetY()
 {
-	return x;
+	return y;
 }
 int Entity::GetWidth()
 {
