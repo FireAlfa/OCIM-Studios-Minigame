@@ -63,6 +63,11 @@ bool Game::Init()
 	//Initialize variables
 	Player.Init(20, WINDOW_HEIGHT >> 1, PLAYER_WIDTH, PLAYER_HEIGHT, 5);
 
+	//Initialize Spikes
+	for (int i = 0; i < MAX_SPIKES; i++) {
+		Spike[i].Init(20, WINDOW_HEIGHT >> 1, PLAYER_WIDTH, PLAYER_HEIGHT, 5);
+	}
+
 	//Initialize background
 	int bg_width;
 	SDL_QueryTexture(Texture_Background, NULL, NULL, &bg_width, NULL);
@@ -134,16 +139,6 @@ bool Game::Update()
 	if (keys[SDL_SCANCODE_UP] == KEY_REPEAT) {
 		fy = -1; //CHANGE
 	}
-
-	//Move left
-	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-		fx = -1;
-	}
-
-	//Move right
-	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-		fx = 1;
-	}
 	
 	//Screen scroll
 	/*Scene.Move(-1, 0);
@@ -152,7 +147,13 @@ bool Game::Update()
 	}*/
 
 	//Player update
-	Player.Move(fx, fy);
+	Player.Move(fy);
+
+	//Check collision
+	SDL_Rect rectPlayer, rectSpike;
+	Player.GetRect(&rectPlayer.x, &rectPlayer.y, &rectPlayer.w, &rectPlayer.h);
+	Spike[0].GetRect(&rectSpike.x, &rectSpike.y, &rectSpike.w, &rectSpike.h);
+	flagCollision = Player.check_collision(rectPlayer, rectSpike);
 
 	contSong--;
 	if (contSong == 0) {

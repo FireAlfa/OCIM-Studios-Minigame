@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Game.h"
+
 class Entity
 {
 public:
@@ -13,9 +15,10 @@ public:
 	int  GetWidth();
 	void ShutDown();
 	bool IsAlive();
-	void Move(int dx, int dy);
+	void Move(int dy);
+	bool check_collision(SDL_Rect A, SDL_Rect B);
 
-private:
+protected:
 	int x, y;
 	int width, height;
 	int speed;
