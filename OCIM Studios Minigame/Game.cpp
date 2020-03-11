@@ -38,6 +38,8 @@ bool Game::Init()
 	Texture_Player = SDL_CreateTextureFromSurface(Renderer, Surface);
 	Surface = IMG_Load("background.png");
 	Texture_Background = SDL_CreateTextureFromSurface(Renderer, Surface);
+	Surface = IMG_Load("obstc.png");
+	Texture_Obstc = SDL_CreateTextureFromSurface(Renderer, Surface);
 
 	//Initialize Background music
 	if (!Mix_Init(ogg_flag)) {
@@ -62,6 +64,9 @@ bool Game::Init()
 
 	//Initialize variables
 	Player.Init(60, WINDOW_HEIGHT >> 1, PLAYER_WIDTH, PLAYER_HEIGHT, 5);
+	Obstc[0].Init(500, 555, PLAYER_WIDTH, PLAYER_HEIGHT, -3);
+	Obstc[1].Init(1000, 555, PLAYER_WIDTH, PLAYER_HEIGHT, -3);
+	Obstc[2].Init(1200, 555, PLAYER_WIDTH, PLAYER_HEIGHT, -3);
 
 	//Initialize background
 	int bg_width;
@@ -81,6 +86,7 @@ void Game::Release()
 	//Clear Textures
 	SDL_DestroyTexture(Texture_Player);
 	SDL_DestroyTexture(Texture_Background);
+	SDL_DestroyTexture(Texture_Obstc);
 
 	//Clear IMG subsystems
 	IMG_Quit();
@@ -131,7 +137,7 @@ bool Game::Update()
 	}
 
 	//Move up
-	if (keys[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+	if (keys[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
 		fy = -1;
 		if (((Player.GetY() + PLAYER_HEIGHT) >= 600)) {
 			jumpFlag = true;
@@ -147,13 +153,22 @@ bool Game::Update()
 	//Player update
 	if (((Player.GetY() + PLAYER_HEIGHT) >= 600) || jumpFlag == true) {
 		Player.Move(fx, fy);
-		if ((Player.GetY() + PLAYER_HEIGHT) <= 300) {
+		if ((Player.GetY() + PLAYER_HEIGHT) <= 400) {
 			jumpFlag = false;
 		}
 	}
 	else {
 		Player.Move(0, 1);
 	}
+	//Obstacle update
+	Obstc[0].Move(1, 0);
+	Obstc[1].Move(1, 0);
+	Obstc[2].Move(1, 0);
+
+	//Collision 
+	//if ((Player.GetX()+ Player.GetWidth()) == Obstc[0].GetX()) {
+	//	Player.IsAlive = false;
+	//}
 
 	contSong--;
 	if (contSong == 0) {
@@ -189,6 +204,14 @@ void Game::Draw()
 	//Draw player
 	Player.GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
 	SDL_RenderCopy(Renderer, Texture_Player, NULL, &rc);
+
+	//Draw obstacle
+	Obstc[0].GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
+	SDL_RenderCopy(Renderer, Texture_Obstc, NULL, &rc);
+	Obstc[1].GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
+	SDL_RenderCopy(Renderer, Texture_Obstc, NULL, &rc);
+	Obstc[2].GetRect(&rc.x, &rc.y, &rc.w, &rc.h);
+	SDL_RenderCopy(Renderer, Texture_Obstc, NULL, &rc);
 
 	//UPDATE screen
 	SDL_RenderPresent(Renderer);

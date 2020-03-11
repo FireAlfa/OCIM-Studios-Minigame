@@ -36,9 +36,10 @@ private:
 	SDL_Surface* Surface;
 	SDL_Texture* Texture_Player;
 	SDL_Texture* Texture_Background;
+	SDL_Texture* Texture_Obstc;
 	Mix_Music* Music_Background;
 
-	Entity Player, Scene;
+	Entity Player, Scene, Obstc[3];
 	int png_flag = IMG_INIT_PNG;
 	int ogg_flag = MIX_INIT_OGG;
 	int mp3_flag = MIX_INIT_MP3;
